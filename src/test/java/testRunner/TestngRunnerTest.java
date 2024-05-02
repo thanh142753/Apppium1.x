@@ -17,12 +17,14 @@ import utilities.ServerManager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 @CucumberOptions(
         plugin = {"pretty", "html:reports/myreport.html",
 //                "rerun:target/rerun.txt",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+//                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         features = {"src/test/resources"},
         glue = "stepDefinitions",
@@ -52,7 +54,7 @@ public class TestngRunnerTest {
 
     @Test(groups = "cucumber scenarios", description = "Runs Cucumber Scenarios", dataProvider = "scenarios")
     public void scenario(PickleWrapper pickleEvent, FeatureWrapper cucumberFeature) throws Throwable {
-//        scenarioName = pickleEvent.getPickle().getName().replaceAll("/", "");
+        scenarioName = pickleEvent.getPickle().getName().replaceAll("/", "").replaceAll(": ", "");
         testNGCucumberRunner.runScenario(pickleEvent.getPickle());
     }
 
@@ -71,26 +73,41 @@ public class TestngRunnerTest {
         testNGCucumberRunner.finish();
     }
 
-//    @AfterMethod
-//    public void AddScreenshot(ITestResult result) throws IOException {
-//        String imagePath = "screenshots" + File.separator + scenarioName + ".png";
-//        String completeImagePath = System.getProperty("user.dir") + File.separator + "target" + File.separator + imagePath;
-//        if (!(baseClass.getDriver() == null)) {
-//            if (result.getStatus() == ITestResult.FAILURE) {
-//                File sourcePath = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
-//                FileUtils.copyFile(sourcePath, new File(completeImagePath));
-//                byte[] encoded = null;
-//                try {
-//                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
-//                } catch (IOException e1) {
-//                    // TODO Auto-generated catch block
-//                    e1.printStackTrace();
-//                }
-//                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
-//            }
+    @AfterMethod
+    public void AddScreenshot(ITestResult result) throws IOException {
+        String imagePath = "screenshots" + File.separator + scenarioName + ".png";
+        String completeImagePath = System.getProperty("user.dir") + File.separator + "target" + File.separator + imagePath;
+        if (!(baseClass.getDriver() == null)) {
+            if (result.getStatus() == ITestResult.FAILURE) {
+                File sourcePath = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(sourcePath, new File(completeImagePath));
+                byte[] encoded = null;
+                try {
+                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
+            }
 //            baseClass.getDriver().quit();
-//        } else {
-//            Assert.fail("Driver is not initialized. Could be error from server-side");
+        } else {
+            Assert.fail("Driver is not initialized. Could be error from server-side");
+        }
+    }
+
+//    @AfterMethod(alwaysRun=true)
+//    public void catchExceptions(ITestResult result){
+////        Calendar calendar = Calendar.getInstance();
+////        SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+////        String methodName = result.getName();
+//        if(!result.isSuccess()){
+//            File scrFile = ((TakesScreenshot)baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
+//            try {
+//                FileUtils.copyFile(scrFile, new File(System.getProperty("user.dir") + File.separator + "reports/FailedImage" + File.separator + scenarioName + ".png"));
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            }
 //        }
 //    }
 

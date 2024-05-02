@@ -1,7 +1,7 @@
 Feature: Login with Valid Credentials
 
   @Mobile
-  Scenario Outline: : Login
+  Scenario Outline: Login
     When I input username "<username>"
     And I input password "<password>"
     And I click on login button
