@@ -1,6 +1,7 @@
 package utilities;
 
 import factory.BaseClass;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -10,42 +11,45 @@ import java.io.File;
 import java.util.HashMap;
 
 public class ServerManager {
-    private static ThreadLocal<ServerManager> serverManagerThreadLocal = new ThreadLocal<>();
-    private static ThreadLocal<AppiumDriverLocalService> server = new ThreadLocal<>();
-
-    public AppiumDriverLocalService getServer(){
-        return server.get();
-    }
+    private static ServerManager serverManager = null;
+    ThreadLocal<AppiumDriverLocalService> server = new ThreadLocal<>();
 
     public static ServerManager getInstance() {
-        if (serverManagerThreadLocal.get() == null) {
-            serverManagerThreadLocal.set(new ServerManager());
+        if (serverManager == null) {
+            serverManager = new ServerManager();
         }
-        return serverManagerThreadLocal.get();
+        return serverManager;
     }
 
     public void startServer(){
-        AppiumDriverLocalService server = WindowsGetAppiumService();
-        server.start();
-        if(server == null || !server.isRunning()){
+        server.set(AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                .usingAnyFreePort()
+                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)));
+//
+//        AppiumDriverLocalService server = WindowsGetAppiumService();
+        server.get().start();
+        if(server.get() == null || !server.get().isRunning()){
             throw new AppiumServerHasNotBeenStartedLocallyException("Appium server not started. ABORT!!!");
         }
-        server.clearOutPutStreams(); // -> Comment this if you want to see server logs in the console
-        this.server.set(server);
+        server.get().clearOutPutStreams(); // -> Comment this if you want to see server logs in the console
     }
 
-    public AppiumDriverLocalService getAppiumServerDefault() {
-        return AppiumDriverLocalService.buildDefaultService();
+    public AppiumDriverLocalService getServer() {
+        return server.get();
     }
 
-    public AppiumDriverLocalService WindowsGetAppiumService() {
-        GlobalParams params = new GlobalParams();
-        return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                .usingAnyFreePort()
-                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
-                .withLogFile(new File(params.getPlatformName() + "_"
-                        + params.getDeviceName() + File.separator + "Server.log")));
-    }
+//    public AppiumDriverLocalService getAppiumServerDefault() {
+//        return AppiumDriverLocalService.buildDefaultService();
+//    }
+//
+//    public AppiumDriverLocalService WindowsGetAppiumService() {
+//        GlobalParams params = new GlobalParams();
+//        return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+//                .usingAnyFreePort()
+//                .withArgument(GeneralServerFlag.SESSION_OVERRIDE));
+//                .withLogFile(new File(params.getPlatformName() + "_"
+//                        + params.getDeviceName() + File.separator + "Server.log")));
+//    }
 //
 //    public AppiumDriverLocalService MacGetAppiumService() {
 //        GlobalParams params = new GlobalParams();

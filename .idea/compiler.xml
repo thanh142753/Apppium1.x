@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Apppium2" />
         <module name="Appium" />
-        <module name="opencart_cucumber_framework" />
         <module name="AppiumPomCucumberWidget" />
+        <module name="opencart_cucumber_framework" />
       </profile>
     </annotationProcessing>
   </component>

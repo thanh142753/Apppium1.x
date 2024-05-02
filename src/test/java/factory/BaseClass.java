@@ -8,8 +8,10 @@ import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.eo.Se;
@@ -28,10 +30,10 @@ import utilities.ServerManager;
 
 public class BaseClass {
 
-//    private static BaseClass baseClass = null;
-    private static ThreadLocal<BaseClass> baseClass = new ThreadLocal<>();
+    private static BaseClass baseClass = null;
 
-    private AppiumDriver driver;
+//    private AppiumDriver driver;
+    ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
     static Properties p;
     static Logger logger;
 
@@ -62,8 +64,39 @@ public class BaseClass {
 
 //            driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
             System.out.println(serverManager.getServer());
-            driver = new AndroidDriver(serverManager.getServer(), desiredCapabilities);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.set(new AndroidDriver(serverManager.getServer(), desiredCapabilities));
+            driver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            System.out.println("DRIVER IS NULL");
+            System.out.println(e);
+        }
+    }
+
+    public void initializeWebDriver(String deviceName, String udid, String platformVersion, String platformName, String browserName, String automationName) {
+        try {
+            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+
+            desiredCapabilities.setCapability("deviceName", deviceName);
+//            desiredCapabilities.setCapability("udid", udid);
+            desiredCapabilities.setCapability("platformVersion", platformVersion);
+            desiredCapabilities.setCapability("platformName", platformName);
+            desiredCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, browserName);
+            desiredCapabilities.setCapability("chromeOptions", ImmutableMap.of("w3c", false));
+            desiredCapabilities.setCapability("automationName",automationName);
+//            System.out.println(System.getProperty("user.dir") + File.separator + "src/test/resources/drivers/chromedriver.exe");
+            desiredCapabilities.setCapability("chromedriverExecutable",System.getProperty("user.dir") + File.separator + "src/test/resources/drivers/chromedriver.exe");
+
+//            desiredCapabilities.setCapability("systemPort", params.getSystemPort());
+//            desiredCapabilities.setCapability("chromeDriverPort", params.getChromeDriverPort());
+
+//            String androidAppUrl = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+//                    + File.separator + "resources" + File.separator + "apps" + File.separator + "Android.SauceLabs.Mobile.Sample.app.2.2.1.apk";
+//            desiredCapabilities.setCapability("app", androidAppUrl);
+
+//            driver.set(new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities));
+//            System.out.println(serverManager.getServer());
+            driver.set(new AndroidDriver(serverManager.getServer(), desiredCapabilities));
+            driver.get().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         } catch (Exception e) {
             System.out.println("DRIVER IS NULL");
             System.out.println(e);
@@ -72,14 +105,14 @@ public class BaseClass {
 
     //declared static method that returns the object of singleton class
     public static BaseClass getInstance() {
-        if (baseClass.get() == null) {
-            baseClass.set(new BaseClass());
+        if (baseClass == null) {
+            baseClass = new BaseClass();
         }
-        return baseClass.get();
+        return baseClass;
     }
 
     public AppiumDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
 //    public void setDriver(WebDriver webDriver) {

@@ -27,7 +27,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>3.0.0-M5</version>
                     <configuration>
                         <suiteXmlFiles>
                             <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
@@ -51,21 +51,14 @@
     </build>
 
     <dependencies>
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java &ndash;&gt;-->
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.cucumber/cucumber-junit &ndash;&gt;-->
         <!--        <dependency>-->
-        <!--	    <groupId>org.seleniumhq.selenium</groupId>-->
-        <!--	    <artifactId>selenium-java</artifactId>-->
-        <!--	    <version>4.15.0</version>-->
-        <!--	</dependency>-->
-
-
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>7.14.1</version>
-            <scope>test</scope>
-        </dependency>
+        <!--            <groupId>io.cucumber</groupId>-->
+        <!--            <artifactId>cucumber-junit</artifactId>-->
+        <!--            <version>7.11.1</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
 
 
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
@@ -129,25 +122,56 @@
             <version>6.1.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.cucumber/cucumber-testng &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-testng</artifactId>-->
+<!--            <version>7.11.1</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-core</artifactId>-->
+<!--            <version>7.11.1</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.cucumber/cucumber-java  &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-java</artifactId>-->
+<!--            <version>7.11.1</version>-->
+<!--        </dependency>-->
+
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>7.11.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-core</artifactId>
-            <version>7.11.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-core</artifactId>-->
+<!--            <version>7.3.3</version>-->
+<!--        </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java  -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>7.11.1</version>
-        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.cucumber/cucumber-java  &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-java</artifactId>-->
+<!--            <version>7.11.1</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.testng/testng &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.testng</groupId>-->
+<!--            <artifactId>testng</artifactId>-->
+<!--            <version>7.7.1</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+
+
 
 
     </dependencies>
