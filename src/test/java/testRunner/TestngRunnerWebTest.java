@@ -54,7 +54,7 @@ public class TestngRunnerWebTest {
 
     @Test(groups = "cucumber scenarios", description = "Runs Cucumber Scenarios", dataProvider = "scenarios")
     public void scenario(PickleWrapper pickleEvent, FeatureWrapper cucumberFeature) throws Throwable {
-        scenarioName = pickleEvent.getPickle().getName().replaceAll("/", "").replaceAll(": ", "");
+        scenarioName = pickleEvent.getPickle().getName().replaceAll("/", "");
         testNGCucumberRunner.runScenario(pickleEvent.getPickle());
     }
 
@@ -73,27 +73,27 @@ public class TestngRunnerWebTest {
         testNGCucumberRunner.finish();
     }
 
-    @AfterMethod
-    public void AddScreenshot(ITestResult result) throws IOException {
-        String imagePath = "screenshots" + File.separator + scenarioName + ".png";
-        String completeImagePath = System.getProperty("user.dir") + File.separator + "target" + File.separator + imagePath;
-        if (!(baseClass.getDriver() == null)) {
-            if (result.getStatus() == ITestResult.FAILURE) {
-                File sourcePath = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(sourcePath, new File(completeImagePath));
-                byte[] encoded = null;
-                try {
-                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
-            }
-//            baseClass.getDriver().quit();
-        } else {
-            Assert.fail("Driver is not initialized. Could be error from server-side");
-        }
-    }
+//    @AfterMethod
+//    public void AddScreenshot(ITestResult result) throws IOException {
+//        String imagePath = "screenshots" + File.separator + scenarioName + ".png";
+//        String completeImagePath = System.getProperty("user.dir") + File.separator + "target" + File.separator + imagePath;
+//        if (!(baseClass.getDriver() == null)) {
+//            if (result.getStatus() == ITestResult.FAILURE) {
+//                File sourcePath = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
+//                FileUtils.copyFile(sourcePath, new File(completeImagePath));
+//                byte[] encoded = null;
+//                try {
+//                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
+//                } catch (IOException e1) {
+//                    // TODO Auto-generated catch block
+//                    e1.printStackTrace();
+//                }
+//                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
+//            }
+////            baseClass.getDriver().quit();
+//        } else {
+//            Assert.fail("Driver is not initialized. Could be error from server-side");
+//        }
+//    }
 
 }
