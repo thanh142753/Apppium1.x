@@ -5,7 +5,7 @@ public interface IHomePageWidget extends IBaseWidget{
 
     void closeTheWebAdvertisement();
 
-    void addProductToCart(String productName) throws InterruptedException;
+    void addProductToCart(String productName);
 
     void clickOnMyCart();
 

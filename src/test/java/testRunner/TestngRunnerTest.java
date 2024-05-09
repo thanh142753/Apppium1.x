@@ -81,14 +81,14 @@ public class TestngRunnerTest {
             if (result.getStatus() == ITestResult.FAILURE) {
                 File sourcePath = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(sourcePath, new File(completeImagePath));
-                byte[] encoded = null;
-                try {
-                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
+//                byte[] encoded = null;
+//                try {
+//                    encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(sourcePath));
+//                } catch (IOException e1) {
+//                    // TODO Auto-generated catch block
+//                    e1.printStackTrace();
+//                }
+//                ExtentCucumberAdapter.getCurrentStep().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String((new String(encoded, StandardCharsets.US_ASCII)), "Failed image").build());
             }
 //            baseClass.getDriver().quit();
         } else {

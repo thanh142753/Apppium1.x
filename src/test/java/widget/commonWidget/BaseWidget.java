@@ -3,6 +3,7 @@ package widget.commonWidget;
 import factory.BaseClass;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,8 @@ public class BaseWidget implements IBaseWidget {
 
     WebDriverWait wait = new WebDriverWait(baseClass.getDriver(),10);
 
+    JavascriptExecutor javascriptExecutor=(JavascriptExecutor)baseClass.getDriver();
+
     //private function
 
     private void changeDriverContextTo (String driverContext){
@@ -30,7 +33,7 @@ public class BaseWidget implements IBaseWidget {
 
     public void clickToElementByText(String text) {
         try {
-            Thread.sleep(2000);
+//            Thread.sleep(2000);
             waitForElementIsDisplayed(String.format(TextElement, text));
             getAndroidElementByXpath(String.format(TextElement, text)).click();
         } catch (Exception e) {
@@ -39,8 +42,17 @@ public class BaseWidget implements IBaseWidget {
 
     }
 
+    public void clickToElementByJs(String xpath) {
+        WebElement webElement = getAndroidElementByXpath(xpath);
+        javascriptExecutor.executeScript("arguments[0].click()", webElement);
+    }
+
     public void waitForElementIsDisplayed(String elementXpath) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementXpath)));
+    }
+
+    public void waitForElementIsClickable(String elementXpath) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(elementXpath)));
     }
 
     @Override

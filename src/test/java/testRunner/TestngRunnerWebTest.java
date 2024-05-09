@@ -96,4 +96,18 @@ public class TestngRunnerWebTest {
 //        }
 //    }
 
+//    @AfterMethod(alwaysRun=true)
+//    public void catchExceptions(ITestResult result) throws IOException {
+////        Calendar calendar = Calendar.getInstance();
+////        SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+////        String methodName = result.getName();
+//        if (baseClass.getDriver() != null) {
+//            if(result.getStatus() == ITestResult.FAILURE){
+//                File scrFile = ((TakesScreenshot) baseClass.getDriver()).getScreenshotAs(OutputType.FILE);
+//                FileUtils.copyFile(scrFile, new File(System.getProperty("user.dir") + File.separator + "reports" + File.separator + scenarioName + ".png"));
+//            }
+//        }
+//
+//    }
+
 }

@@ -96,7 +96,9 @@ public class BaseClass {
 //            driver.set(new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities));
 //            System.out.println(serverManager.getServer());
             driver.set(new AndroidDriver(serverManager.getServer(), desiredCapabilities));
-            driver.get().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+//            driver.get().manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+//            driver.get().manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+//            driver.get().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         } catch (Exception e) {
             System.out.println("DRIVER IS NULL");
             System.out.println(e);

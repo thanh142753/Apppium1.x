@@ -19,8 +19,7 @@ public class HomePageSteps {
     }
 
     @And("I add product {string} to the cart")
-    public void iAddProductToTheCart(String productName) throws InterruptedException {
-        Thread.sleep(10000);
+    public void iAddProductToTheCart(String productName) {
         homePage.getHomePageWidget().addProductToCart(productName);
     }
 

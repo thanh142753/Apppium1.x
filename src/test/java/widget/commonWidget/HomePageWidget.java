@@ -32,27 +32,30 @@ public class HomePageWidget extends BaseWidget implements IHomePageWidget {
     }
 
     @Override
-    public void addProductToCart(String productName) throws InterruptedException {
+    public void addProductToCart(String productName) {
         waitForElementIsDisplayed(String.format(BTN_AddProductByName, productName));
         getAndroidElementByXpath(String.format(BTN_AddProductByName, productName)).click();
         clickToElementByText("TP. Hà Nội");
         clickToElementByText("H. Đan Phượng");
         clickToElementByText("TT. Phùng");
         clickToElementByText("Xác nhận");
-        Thread.sleep(4000);
-        waitForElementIsDisplayed(String.format(BTN_AddProductByName, productName));
-        getAndroidElementByXpath(String.format(BTN_AddProductByName, productName)).click();
+//        Thread.sleep(4000);
+        waitForElementIsClickable(String.format(BTN_AddProductByName, productName));
+        clickToElementByJs(String.format(BTN_AddProductByName, productName));
+//        getAndroidElementByXpath(String.format(BTN_AddProductByName, productName)).click();
 //        Thread.sleep(4000);
     }
 
     @Override
     public void clickOnMyCart() {
         waitForElementIsDisplayed(BTN_MyCart);
-        getAndroidElementByXpath(BTN_MyCart).click();
+        clickToElementByJs(BTN_MyCart);
+//        getAndroidElementByXpath(BTN_MyCart).click();
     }
 
     @Override
     public void verifyProductInCart(String productName, String quantity) {
+        waitForElementIsDisplayed(String.format(ProductInCart, productName, quantity));
         getAndroidElementByXpath(String.format(ProductInCart, productName, quantity)).isDisplayed();
     }
 
